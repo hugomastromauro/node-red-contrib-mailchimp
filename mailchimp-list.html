@@ -1,0 +1,51 @@
+<!-- Sample html file that corresponds to the 99-sample.js file              -->
+<!-- This creates and configures the onscreen elements of the node           -->
+
+<!-- If you use this as a template, update the copyright with your own name. -->
+
+<!-- First, the content of the edit dialog is defined.                       -->
+
+<script type="text/x-red" data-template-name="mailchimp-list">
+    <div class="form-row">
+            <label for="node-input-mailchimp"><i class="fa fa-user"></i> API Key</label>
+            <input type="text" id="node-input-mailchimp">
+        </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Node name</label>
+        <input type="text" id="node-input-name" placeholder="Node name">
+    </div>
+    
+</script>
+
+
+<!-- Next, some simple help text is provided for the node.                   -->
+<script type="text/x-red" data-help-name="mailchimp-list">
+
+    <h3>About</h3>
+    <p>Send an email using Mandrill API.</p>
+
+    <h3>Use</h3>
+    <p>To use either configure the form or pass the following parameters through inside the payload 'name', 'email', 'list'.</p>
+    <p>For more information on these parameters see the MailChimp API:</p>
+    <p><a href="https://github.com/mihok/mailchimp-node">mailchimp-node</a></p>
+
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('mailchimp-list', {
+        category: 'MailChimp',
+        defaults: { 
+            mailchimp: {type:"mailchimp-config", required:true},
+            name: { value:"" }
+        },
+        inputs: 1,               
+        outputs: 1,
+        icon: "envelope.png",
+        color: "#E2E2E5", 
+        outputLabels: ["data","err"],
+        label: function() {
+            return this.name || "Subscribe Email";
+        },
+        paletteLabel: "Member subscribe"
+    });
+</script>

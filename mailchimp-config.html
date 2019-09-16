@@ -1,0 +1,25 @@
+<script type="text/javascript">
+    RED.nodes.registerType('mailchimp-config',{
+        category: 'config',
+        defaults: {
+            name: { value: "MailChimp" }
+        },
+        credentials: {
+            apiKey: { type:"text" }
+        },
+        label: function() {
+            return this.name;
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="mailchimp-config">
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-config-input-name">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-apiKey"><i class="fa fa-wrench"></i> API Key</label>
+        <input type="text" id="node-config-input-apiKey">
+    </div>
+</script>
