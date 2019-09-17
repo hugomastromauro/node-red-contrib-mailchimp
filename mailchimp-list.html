@@ -7,14 +7,17 @@
 
 <script type="text/x-red" data-template-name="mailchimp-list">
     <div class="form-row">
-            <label for="node-input-mailchimp"><i class="fa fa-user"></i> API Key</label>
-            <input type="text" id="node-input-mailchimp">
-        </div>
+        <label for="node-input-mailchimp"><i class="fa fa-user"></i> API Key</label>
+        <input type="text" id="node-input-mailchimp">
+    </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Node name</label>
         <input type="text" id="node-input-name" placeholder="Node name">
     </div>
-    
+    <div class="form-row">
+        <label for="node-input-apiKey"><i class="fa fa-lock"></i> API key</label>
+        <input type="text" id="node-input-apiKey" placeholder="Change API key">
+    </div>
 </script>
 
 
@@ -36,13 +39,16 @@
         category: 'MailChimp',
         defaults: { 
             mailchimp: {type:"mailchimp-config", required:true},
-            name: { value:"" }
+            name: { value:"" },
+            list: { value: function() {
+                console.log(this);
+            }}
         },
         inputs: 1,               
-        outputs: 1,
+        outputs: 2,
         icon: "envelope.png",
         color: "#E2E2E5", 
-        outputLabels: ["data","err"],
+        outputLabels: ["data", "err"],
         label: function() {
             return this.name || "Subscribe Email";
         },

@@ -23,10 +23,7 @@
     "redconnect"
   ],
   "license": "Apache-2.0",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/redconnect-io/node-red-contrib-mailchimp"
-  },
+  "repository": "https://github.com/hugomastromauro/node-red-contrib-mailchimp",
   "node-red": {
     "nodes": {
       "mailchimp-list": "mailchimp-list.js",
@@ -34,7 +31,8 @@
     }
   },
   "dependencies": {
-    "mailchimp-node": "^1.1.7",
-    "mailchimp-api-v3": "^1.13.1"
-  }
+    "mailchimp-api-v3": "^1.13.1",
+    "mailchimp-node": "^1.1.7"
+  },
+  "private": false
 }

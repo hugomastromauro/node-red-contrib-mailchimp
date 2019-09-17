@@ -1,0 +1,75 @@
+Arguments: 
+  /Users/hugomastromaurodasilva/.nvm/versions/node/v12.6.0/bin/node /usr/local/Cellar/yarn/1.16.0/libexec/bin/yarn.js init
+
+PATH: 
+  /usr/local/sbin:/Users/hugomastromaurodasilva/Library/Android/sdk/platform-tools:/Users/hugomastromaurodasilva/Library/Android/sdk/tools:/Users/hugomastromaurodasilva/Library/Android/sdk/tools/bin:/Users/hugomastromaurodasilva/Library/Android/sdk/emulator:/Users/hugomastromaurodasilva/.nvm/versions/node/v12.6.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/share/dotnet:~/.dotnet/tools:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Applications/Xamarin Workbooks.app/Contents/SharedSupport/path-bin
+
+Yarn version: 
+  1.16.0
+
+Node version: 
+  12.6.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: canceled
+      at Interface.<anonymous> (/usr/local/Cellar/yarn/1.16.0/libexec/lib/cli.js:125850:13)
+      at Interface.emit (events.js:203:13)
+      at Interface._ttyWrite (readline.js:877:16)
+      at ReadStream.onkeypress (readline.js:189:10)
+      at ReadStream.emit (events.js:203:13)
+      at emitKeys (internal/readline.js:424:14)
+      at emitKeys.next (<anonymous>)
+      at ReadStream.onData (readline.js:1145:36)
+      at ReadStream.emit (events.js:203:13)
+      at addChunk (_stream_readable.js:294:12)
+
+npm manifest: 
+  {
+    "name": "node-red-contrib-mailchimp",
+    "version": "1.0.1",
+    "description": "NodeRED node integration to MailChimp Service",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "predev": "npm i -g",
+      "dev": "node-red -v"
+    },
+    "author": "Hugo Mastromauro",
+    "contributors": [
+      {
+        "name": "Hugo Mastromauro",
+        "email": "hugo@atuo.in"
+      }
+    ],
+    "keywords": [
+      "node-red",
+      "contrib-json",
+      "mandrill",
+      "mailchimp",
+      "redconnect"
+    ],
+    "license": "Apache-2.0",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/redconnect-io/node-red-contrib-mailchimp"
+    },
+    "node-red": {
+      "nodes": {
+        "mailchimp-list": "mailchimp-list.js",
+        "mailchimp-config": "mailchimp-config.js"
+      }
+    },
+    "dependencies": {
+      "mailchimp-node": "^1.1.7",
+      "mailchimp-api-v3": "^1.13.1"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

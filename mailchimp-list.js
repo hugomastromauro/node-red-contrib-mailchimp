@@ -1,3 +1,4 @@
+var Mailchimp = require('mailchimp-api-v3');
 
 module.exports = function(RED) {
     'use strict';
@@ -7,13 +8,14 @@ module.exports = function(RED) {
        
         this.mailchimpConfig = RED.nodes.getNode(n.mailchimp);
         
-        this.apiKey = this.mailchimpConfig.apiKey;
+        this.apiKey = n.apiKey || this.mailchimpConfig.apiKey;
         
 		this.name = n.name;
 
 		var node = this;
-		var mailchimp = require('mailchimp-node')(this.apiKey);
         
+        var mailchimp = new Mailchimp(this.apiKey);
+
 		if (!mailchimp) {
 			node.warn("Missing API key credentials");
 			return;
@@ -21,11 +23,7 @@ module.exports = function(RED) {
 
         node.on("input", function(msg) {
 
-            console.log('foi', msg);
-
             node.sendMsg = function (err, data) {
-
-                console.log(data);
     
                 if (err) {
     
@@ -47,7 +45,7 @@ module.exports = function(RED) {
         
             var _cb = function(err, data) {
                 node.sendMsg(err, data);
-            }		
+            };		
     
             if (typeof service[msg.payload.operation] == "function") {
     
@@ -77,7 +75,7 @@ module.exports = function(RED) {
             }
             
             if ( arg == "Payload" && typeof tmpValue == 'undefined' ){
-                out[arg]=src["payload"];
+                out[arg] = src["payload"];
             }
     
         }
@@ -86,12 +84,23 @@ module.exports = function(RED) {
     
         service.create = function(svc, msg, cb){
             var params={};
-            
-            copyArg(msg,"email",params,undefined,true); 
-            copyArg(msg,"status",params,undefined,false); 
-            copyArg(msg,"list",params,undefined,false); 
 
-            svc.lists.create(params, cb);
+            copyArg(msg.payload,"email_address",params,undefined,false); 
+            copyArg(msg.payload,"status",params,undefined,false);
+            copyArg(msg.payload,"merge_fields",params,undefined,true); 
+            copyArg(msg.payload,"list",params,undefined,false); 
+
+            svc.post('/lists/' + params.list + '/members', params)
+                .then(function(results) {
+                    
+                    cb(null, results);
+
+                })
+                .catch(function (err) {
+                    
+                    cb("failed: Operation node defined - " + err, null);
+
+                });
         }
     }
         
