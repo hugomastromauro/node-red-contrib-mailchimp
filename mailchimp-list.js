@@ -88,7 +88,8 @@ module.exports = function(RED) {
             copyArg(msg.payload,"email_address",params,undefined,false); 
             copyArg(msg.payload,"status",params,undefined,false);
             copyArg(msg.payload,"merge_fields",params,undefined,true); 
-            copyArg(msg.payload,"list",params,undefined,false); 
+            copyArg(msg.payload,"list",params,undefined,false);
+            copyArg(msg.payload,"tags",params,undefined,true); 
 
             svc.post('/lists/' + params.list + '/members', params)
                 .then(function(results) {
