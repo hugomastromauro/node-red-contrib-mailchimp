@@ -31,8 +31,7 @@
     }
   },
   "dependencies": {
-    "mailchimp-api-v3": "^1.13.1",
-    "mailchimp-node": "^1.1.7"
+    "mailchimp-api-v3": "^1.13.1"
   },
   "private": false
 }
