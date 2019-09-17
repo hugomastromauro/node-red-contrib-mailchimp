@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-mailchimp",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "NodeRED node integration to MailChimp Service",
   "main": "index.js",
   "scripts": {
