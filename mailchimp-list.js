@@ -1,4 +1,5 @@
 var Mailchimp = require('mailchimp-api-v3');
+var crypto = require('crypto');
 
 module.exports = function(RED) {
     'use strict';
@@ -30,7 +31,7 @@ module.exports = function(RED) {
                     node.status({ fill: "red", shape: "ring", text: "error"});
                     node.error("failed: " + err.toString(), msg);
                     node.send([null, { err: err }]);
-    
+
                     return;
     
                 } else {
@@ -82,6 +83,29 @@ module.exports = function(RED) {
     
         var service={};
     
+        service.get = function(svc, msg, cb){
+            var params={};
+
+            copyArg(msg.payload,"email_address",params,undefined,false); 
+            copyArg(msg.payload,"list",params,undefined,false);
+
+            var hash = crypto.createHash('md5').update(params.email_address).digest('hex');
+
+            svc.get('/lists/' + params.list + '/members/' + hash)
+                .then(function(results) {
+                    
+                    console.log(results);
+                    // cb(null, results);
+
+                })
+                .catch(function (err) {
+                    
+                    console.log(err);
+                    // cb(err);
+
+                });
+        }
+
         service.create = function(svc, msg, cb){
             var params={};
 
@@ -99,9 +123,46 @@ module.exports = function(RED) {
                 })
                 .catch(function (err) {
                     
-                    cb("failed: Operation node defined - " + err, null);
+                    if (err.status == 400) {
+
+                        var hash = crypto.createHash('md5').update(params.email_address).digest('hex');
+
+                        svc.patch('/lists/' + params.list + '/members/' + hash, params)
+                            .then(function(results) {
+
+                                var tags = params.tags.map( function(val) {
+                                    return { name: val, status: 'active' }
+                                });
+
+                                svc.post('/lists/' + params.list + '/members/' + hash + '/tags', { tags: tags });
+
+                                cb(null, results);
+
+                            })
+                            .catch(function (err) {
+                                
+                                cb(err);
+
+                            });
+
+                    } else {
+
+                        cb(err);
+
+                    }
 
                 });
+        }
+
+        service.update = function(svc, msg, cb){
+            var params={};
+
+            copyArg(msg.payload,"email_address",params,undefined,false); 
+            copyArg(msg.payload,"status",params,undefined,false);
+            copyArg(msg.payload,"merge_fields",params,undefined,true); 
+            copyArg(msg.payload,"list",params,undefined,false);
+            copyArg(msg.payload,"tags",params,undefined,true); 
+            
         }
     }
         
